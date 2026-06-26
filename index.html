@@ -64,6 +64,11 @@ details.gloss[open]>summary{border-bottom:1px solid var(--line)}
 .glossgrp{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--magenta);margin:16px 0 7px}
 .glossitem{font-size:12.5px;margin:0 0 8px;line-height:1.5;color:var(--muted)}
 .glossitem b{color:var(--ink)}
+.gloss.sub{margin:0 0 12px}
+.gloss.sub>summary{font-size:11px;padding:10px 14px;color:var(--ink)}
+.gloss.sub>summary .dot{display:none}
+.gloss.sub .glossbody{padding:4px 14px 12px}
+.gloss.sub .glossitem{margin:0 0 7px}
 </style>
 </head>
 <body>
@@ -74,33 +79,12 @@ details.gloss[open]>summary{border-bottom:1px solid var(--line)}
   <p class="asof" id="asof"></p>
 
   <details class="gloss">
-    <summary><span class="dot"></span>KPI Definitions &amp; Glossary<span class="chev">&#9656;</span></summary>
+    <summary><span class="dot"></span>Reading this dashboard<span class="chev">&#9656;</span></summary>
     <div class="glossbody">
       <div class="glossgrp">Date windows</div>
       <p class="glossitem"><b>Last completed week</b> &mdash; the most recent finished Sunday&ndash;Saturday week.</p>
       <p class="glossitem"><b>MTD (month to date)</b> &mdash; the 1st of the current month through today.</p>
       <p class="glossitem"><b>QTD (quarter to date)</b> &mdash; the 1st of the current quarter through today.</p>
-
-      <div class="glossgrp">Primary KPIs &mdash; LinkedIn (post-level)</div>
-      <p class="glossitem"><b>Engagement Rate</b> &mdash; engagements &divide; impressions on posts published in the period; how well content resonates relative to how many saw it.</p>
-      <p class="glossitem"><b>Content Reach</b> &mdash; total impressions on posts published in the period; how far content traveled.</p>
-      <p class="glossitem"><b>Stickiness &mdash; Shares</b> &mdash; times posts were reshared (amplification).</p>
-      <p class="glossitem"><b>Stickiness &mdash; Comments</b> &mdash; comments on posts (conversation).</p>
-      <p class="glossitem"><b>Stickiness &mdash; Saves</b> &mdash; times posts were saved; not a LinkedIn metric, so it reads 0.</p>
-      <p class="glossitem"><b>Video Views</b> &mdash; views of video posts; currently unreliable in Sprout (known data issue).</p>
-
-      <div class="glossgrp">Secondary KPIs &mdash; LinkedIn (profile-level)</div>
-      <p class="glossitem"><b>Profile Impressions</b> &mdash; impressions on the Pindrop LinkedIn Page itself &mdash; brand interest beyond any single post.</p>
-      <p class="glossitem"><b>Channel Growth</b> &mdash; net new followers (gained minus lost) during the period.</p>
-      <p class="glossitem"><b>Total Followers</b> &mdash; cumulative LinkedIn Page follower count.</p>
-
-      <div class="glossgrp">Traffic to Site &mdash; GA4 (Organic Social + Organic Video)</div>
-      <p class="glossitem"><b>Sessions</b> &mdash; visits to the site arriving from organic social and organic video sources.</p>
-      <p class="glossitem"><b>Total / New Users</b> &mdash; unique visitors, and the first-time subset, from those sources.</p>
-      <p class="glossitem"><b>Engagement Rate (site)</b> &mdash; share of sessions that were engaged (lasted 10s+, converted, or had 2+ pageviews).</p>
-      <p class="glossitem"><b>Session Time</b> &mdash; average session duration.</p>
-      <p class="glossitem"><b>Organic Share</b> &mdash; organic (social + video) sessions as a percent of all site sessions.</p>
-
       <div class="glossgrp">Reading the deltas</div>
       <p class="glossitem"><b>Snapshot &Delta;</b> &mdash; change vs the immediately preceding equal-length period (this week vs last week, etc.).</p>
       <p class="glossitem"><b>Trend headline</b> &mdash; latest complete month vs the prior month; the line chart's hollow June point is month-to-date.</p>
@@ -110,10 +94,39 @@ details.gloss[open]>summary{border-bottom:1px solid var(--line)}
   <!-- SNAPSHOT -->
   <div class="section-title"><span class="dot"></span>Current Snapshot</div>
   <div class="subsection">Primary KPIs &mdash; LinkedIn (post-level &middot; Post Performance)</div>
+  <details class="gloss sub">
+    <summary>Primary KPI definitions<span class="chev">&#9656;</span></summary>
+    <div class="glossbody">
+      <p class="glossitem"><b>Engagement Rate</b> &mdash; engagements &divide; impressions on posts published in the period; how well content resonates relative to how many saw it.</p>
+      <p class="glossitem"><b>Content Reach</b> &mdash; total impressions on posts published in the period; how far content traveled.</p>
+      <p class="glossitem"><b>Stickiness &mdash; Shares</b> &mdash; times posts were reshared (amplification).</p>
+      <p class="glossitem"><b>Stickiness &mdash; Comments</b> &mdash; comments on posts (conversation).</p>
+      <p class="glossitem"><b>Stickiness &mdash; Saves</b> &mdash; times posts were saved; not a LinkedIn metric, so it reads 0.</p>
+      <p class="glossitem"><b>Video Views</b> &mdash; views of video posts; currently unreliable in Sprout (known data issue).</p>
+    </div>
+  </details>
   <div class="card"><table><thead><tr id="h1"></tr></thead><tbody id="snapPrimary"></tbody></table></div>
   <div class="subsection">Secondary KPIs (profile-level &middot; LinkedIn Pages)</div>
+  <details class="gloss sub">
+    <summary>Secondary KPI definitions<span class="chev">&#9656;</span></summary>
+    <div class="glossbody">
+      <p class="glossitem"><b>Profile Impressions</b> &mdash; impressions on the Pindrop LinkedIn Page itself &mdash; brand interest beyond any single post.</p>
+      <p class="glossitem"><b>Channel Growth</b> &mdash; net new followers (gained minus lost) during the period.</p>
+      <p class="glossitem"><b>Total Followers</b> &mdash; cumulative LinkedIn Page follower count.</p>
+    </div>
+  </details>
   <div class="card"><table><thead><tr id="h2"></tr></thead><tbody id="snapSecondary"></tbody></table></div>
   <div class="subsection">Traffic to Site &mdash; Organic Social + Organic Video (GA4)</div>
+  <details class="gloss sub">
+    <summary>Traffic KPI definitions<span class="chev">&#9656;</span></summary>
+    <div class="glossbody">
+      <p class="glossitem"><b>Sessions</b> &mdash; visits to the site arriving from organic social and organic video sources.</p>
+      <p class="glossitem"><b>Total / New Users</b> &mdash; unique visitors, and the first-time subset, from those sources.</p>
+      <p class="glossitem"><b>Engagement Rate (site)</b> &mdash; share of sessions that were engaged (lasted 10s+, converted, or had 2+ pageviews).</p>
+      <p class="glossitem"><b>Session Time</b> &mdash; average session duration.</p>
+      <p class="glossitem"><b>Organic Share</b> &mdash; organic (social + video) sessions as a percent of all site sessions.</p>
+    </div>
+  </details>
   <div class="card"><table><thead><tr id="h3"></tr></thead><tbody id="snapTraffic"></tbody></table></div>
   <div class="subsection">Organic Social + Organic Video &mdash; share of total sessions</div>
   <div class="share" id="share"></div>
