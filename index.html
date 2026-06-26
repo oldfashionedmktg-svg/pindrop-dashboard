@@ -54,6 +54,16 @@ td.metric small{display:block;font-weight:400;color:var(--muted);font-size:11.5p
 svg{display:block;width:100%;height:auto;overflow:visible}
 .foot{color:var(--muted);font-size:11.5px;margin-top:34px;border-top:1px solid var(--line);padding-top:14px;line-height:1.6}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--magenta);margin-right:7px;vertical-align:middle}
+details.gloss{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:16px 0 0;overflow:hidden;box-shadow:0 1px 3px rgba(120,0,60,.05)}
+details.gloss>summary{cursor:pointer;list-style:none;padding:13px 16px;font-size:12.5px;font-weight:700;color:var(--magenta);text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:8px;user-select:none}
+details.gloss>summary::-webkit-details-marker{display:none}
+details.gloss>summary .chev{margin-left:auto;transition:transform .2s ease;color:var(--muted);font-size:13px}
+details.gloss[open]>summary .chev{transform:rotate(90deg)}
+details.gloss[open]>summary{border-bottom:1px solid var(--line)}
+.glossbody{padding:6px 16px 14px}
+.glossgrp{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--magenta);margin:16px 0 7px}
+.glossitem{font-size:12.5px;margin:0 0 8px;line-height:1.5;color:var(--muted)}
+.glossitem b{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -62,6 +72,40 @@ svg{display:block;width:100%;height:auto;overflow:visible}
   <h1>Pindrop &mdash; Social Media KPIs</h1>
   <p class="sub">Current snapshot &middot; Monthly &amp; quarterly trends (2026 to date)</p>
   <p class="asof" id="asof"></p>
+
+  <details class="gloss">
+    <summary><span class="dot"></span>KPI Definitions &amp; Glossary<span class="chev">&#9656;</span></summary>
+    <div class="glossbody">
+      <div class="glossgrp">Date windows</div>
+      <p class="glossitem"><b>Last completed week</b> &mdash; the most recent finished Sunday&ndash;Saturday week.</p>
+      <p class="glossitem"><b>MTD (month to date)</b> &mdash; the 1st of the current month through today.</p>
+      <p class="glossitem"><b>QTD (quarter to date)</b> &mdash; the 1st of the current quarter through today.</p>
+
+      <div class="glossgrp">Primary KPIs &mdash; LinkedIn (post-level)</div>
+      <p class="glossitem"><b>Engagement Rate</b> &mdash; engagements &divide; impressions on posts published in the period; how well content resonates relative to how many saw it.</p>
+      <p class="glossitem"><b>Content Reach</b> &mdash; total impressions on posts published in the period; how far content traveled.</p>
+      <p class="glossitem"><b>Stickiness &mdash; Shares</b> &mdash; times posts were reshared (amplification).</p>
+      <p class="glossitem"><b>Stickiness &mdash; Comments</b> &mdash; comments on posts (conversation).</p>
+      <p class="glossitem"><b>Stickiness &mdash; Saves</b> &mdash; times posts were saved; not a LinkedIn metric, so it reads 0.</p>
+      <p class="glossitem"><b>Video Views</b> &mdash; views of video posts; currently unreliable in Sprout (known data issue).</p>
+
+      <div class="glossgrp">Secondary KPIs &mdash; LinkedIn (profile-level)</div>
+      <p class="glossitem"><b>Profile Impressions</b> &mdash; impressions on the Pindrop LinkedIn Page itself &mdash; brand interest beyond any single post.</p>
+      <p class="glossitem"><b>Channel Growth</b> &mdash; net new followers (gained minus lost) during the period.</p>
+      <p class="glossitem"><b>Total Followers</b> &mdash; cumulative LinkedIn Page follower count.</p>
+
+      <div class="glossgrp">Traffic to Site &mdash; GA4 (Organic Social + Organic Video)</div>
+      <p class="glossitem"><b>Sessions</b> &mdash; visits to the site arriving from organic social and organic video sources.</p>
+      <p class="glossitem"><b>Total / New Users</b> &mdash; unique visitors, and the first-time subset, from those sources.</p>
+      <p class="glossitem"><b>Engagement Rate (site)</b> &mdash; share of sessions that were engaged (lasted 10s+, converted, or had 2+ pageviews).</p>
+      <p class="glossitem"><b>Session Time</b> &mdash; average session duration.</p>
+      <p class="glossitem"><b>Organic Share</b> &mdash; organic (social + video) sessions as a percent of all site sessions.</p>
+
+      <div class="glossgrp">Reading the deltas</div>
+      <p class="glossitem"><b>Snapshot &Delta;</b> &mdash; change vs the immediately preceding equal-length period (this week vs last week, etc.).</p>
+      <p class="glossitem"><b>Trend headline</b> &mdash; latest complete month vs the prior month; the line chart's hollow June point is month-to-date.</p>
+    </div>
+  </details>
 
   <!-- SNAPSHOT -->
   <div class="section-title"><span class="dot"></span>Current Snapshot</div>
@@ -76,6 +120,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 
   <!-- TRENDS -->
   <div class="section-title"><span class="dot" style="background:var(--crimson)"></span>Trends &mdash; Primary KPIs (LinkedIn)</div>
+  <div class="note" id="ytnote" style="margin-top:0;margin-bottom:14px"><b>Reading the trends:</b> each headline value is the latest <b>complete</b> month (May 2026) with its change vs the prior month. Line charts show every month Jan&ndash;Jun 2026; <b>Jun is month-to-date</b> (hollow point) so it reads low. Bars compare Q1 (Jan&ndash;Mar) to Q2 quarter-to-date.</div>
   <div class="kgrid" id="trendPrimary"></div>
 
   <div class="section-title"><span class="dot" style="background:var(--crimson)"></span>Trends &mdash; Secondary KPIs</div>
@@ -83,8 +128,6 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 
   <div class="section-title"><span class="dot" style="background:var(--crimson)"></span>Trends &mdash; Traffic (Organic Social + Organic Video)</div>
   <div class="kgrid" id="trendTraffic"></div>
-
-  <div class="note" id="ytnote"><b>Reading the trends:</b> each headline value is the latest <b>complete</b> month (May 2026) with its change vs the prior month. Line charts show every month Jan&ndash;Jun 2026; <b>Jun is month-to-date</b> (hollow point) so it reads low. Bars compare Q1 (Jan&ndash;Mar) to Q2 quarter-to-date.</div>
 
   <div class="foot">
     <b>Sources:</b> Primary &mdash; Sprout Social Cross-Network &rsaquo; Post Performance (LinkedIn). Secondary &mdash; Sprout Social LinkedIn Pages. Traffic &mdash; Google Looker Studio (GA4), Organic Social + Organic Video channels combined. Snapshot pulled Jun 26, 2026. LinkedIn video views/saves are unreliable in Sprout (known data issue). Session time = avg. session duration. Refreshed weekly.
@@ -94,17 +137,17 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 <script>
 /* ---------- SNAPSHOT (last week / MTD / QTD) ---------- */
 const SNAP_PRIMARY=[
- {m:"Engagement Rate",sub:"per impression",w:["7.2%",63.3,1],mo:["13.7%",0.5,1],q:["11.4%",2.7,1]},
- {m:"Content Reach",sub:"impressions on posts",w:["6,891",17.3,1],mo:["26,322",5.1,1],q:["90,748",13.7,1]},
- {m:"Stickiness &mdash; Shares",sub:"amplification",w:["66",106.3,1],mo:["161",33.1,1],q:["476",59.7,1]},
- {m:"Stickiness &mdash; Comments",sub:"conversation",w:["3",25,1],mo:["15",21.1,1],q:["51",45.7,1]},
+ {m:"Engagement Rate",sub:"per impression",w:["6.8%",64.9,-1],mo:["13.4%",1.5,-1],q:["11.3%",3.4,-1]},
+ {m:"Content Reach",sub:"impressions on posts",w:["7,277",23.0,1],mo:["27,329",9.0,1],q:["91,787",15.0,1]},
+ {m:"Stickiness &mdash; Shares",sub:"amplification",w:["66",106.3,1],mo:["162",33.9,1],q:["477",60.1,1]},
+ {m:"Stickiness &mdash; Comments",sub:"conversation",w:["3",25.0,-1],mo:["15",21.1,-1],q:["51",45.7,1]},
  {m:"Stickiness &mdash; Saves",sub:"worth returning to",w:["0",0,0],mo:["0",0,0],q:["0",0,0]},
- {m:"Video Views",sub:"LinkedIn (Sprout &ndash; unreliable)",w:["0",0,0],mo:["0",0,0],q:["0",0,0]},
+ {m:"Video Views",sub:"LinkedIn (Sprout &ndash; unreliable)",w:["0",0,0],mo:["0",0,0],q:["0",100,-1]},
 ];
 const SNAP_SECONDARY=[
- {m:"Profile Impressions",sub:"brand interest",w:["9,028",14.7,1],mo:["30,350",7.8,1],q:["97,209",14.2,1]},
- {m:"Channel Growth",sub:"net new followers",w:["+355",225.7,1],mo:["+608",31.3,1],q:["+1,837",32.5,1]},
- {m:"Total Followers",sub:"audience size",w:["24,231",1.5,1],mo:["24,321",3,1],q:["24,321",8.4,1]},
+ {m:"Profile Impressions",sub:"brand interest",w:["9,028",14.7,1],mo:["32,500",15.5,1],q:["99,357",16.8,1]},
+ {m:"Channel Growth",sub:"net new followers",w:["+366",235.8,1],mo:["+709",53.1,1],q:["+1,938",39.8,1]},
+ {m:"Total Followers",sub:"audience size",w:["24,231",1.5,1],mo:["24,341",3,1],q:["24,341",8.5,1]},
 ];
 const SNAP_TRAFFIC=[
  {m:"Sessions",sub:"visits from organic",w:["603",58.3,1],mo:["1,655",19.1,-1],q:["6,280",32,1]},
@@ -113,13 +156,13 @@ const SNAP_TRAFFIC=[
  {m:"Engagement Rate",sub:"engaged sessions",w:["55.9%",7.4,-1],mo:["58.2%",8,-1],q:["62.9%",4.2,1]},
  {m:"Session Time",sub:"avg. duration",w:["3:13",21.2,1],mo:["3:16",14.9,-1],q:["3:36",17.6,1]},
 ];
-const SHARE=[["Last week","18.5%","Jun 14&ndash;20"],["Month to date","14.4%","Jun 1&ndash;26"],["Quarter to date","15.4%","Apr 1&ndash;26"]];
+const SHARE=[["Last week","18.5%","Jun 14&ndash;20"],["Month to date","14.4%","Jun 1&ndash;26"],["Quarter to date","15.4%","Apr 1 &ndash; Jun 26"]];
 
 function headRow(id){document.getElementById(id).innerHTML=
  '<th class="metric">Metric</th>'+
  '<th><span class="periodhead">Last week</span><span class="periodsub">Jun 14&ndash;20</span></th>'+
  '<th><span class="periodhead">MTD</span><span class="periodsub">Jun 1&ndash;26</span></th>'+
- '<th><span class="periodhead">QTD</span><span class="periodsub">Apr 1&ndash;26</span></th>';}
+ '<th><span class="periodhead">QTD</span><span class="periodsub">Apr 1 &ndash; Jun 26</span></th>';}
 ["h1","h2","h3"].forEach(headRow);
 function cell(a){const[v,d,dir]=a;if(dir===0)return `<td><span class="val">${v}</span><br><span class="delta flat">&mdash;</span></td>`;
  const c=dir>0?"up":"down",ar=dir>0?"&#9650;":"&#9660;";return `<td><span class="val">${v}</span><br><span class="delta ${c}">${ar} ${d}%</span></td>`;}
@@ -129,13 +172,15 @@ renderSnap("snapPrimary",SNAP_PRIMARY);renderSnap("snapSecondary",SNAP_SECONDARY
 document.getElementById("share").innerHTML=SHARE.map(s=>`<div class="sharecard"><div class="lbl">${s[0]}</div><div class="big">${s[1]}</div><div class="meta">${s[2]}</div></div>`).join("");
 
 /* ---------- TREND DATA ---------- */
-const DATA={"months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun*"], "quarters": ["Q1", "Q2 QTD"], "primary": [{"name": "Engagement Rate", "sub": "per impression", "unit": "%", "monthly": [8.8, 12.6, 13.1, 8.3, 13.4, 13.7], "monthlyDisp": [8.8, 12.6, 13.1, 8.3, 13.4, 13.7], "value": "13.4", "delta": 61.4, "dir": 1, "quarterly": [11.7, 11.4]}, {"name": "Content Reach", "sub": "impressions", "unit": "", "monthly": [23145, 21052, 35600, 37018, 27321, 26322], "monthlyDisp": [23145, 21052, 35600, 37018, 27321, 26322], "value": "27,321", "delta": 26.2, "dir": -1, "quarterly": [79797, 90661]}, {"name": "Shares", "sub": "amplification", "unit": "", "monthly": [94, 66, 138, 175, 140, 161], "monthlyDisp": [94, 66, 138, 175, 140, 161], "value": "140", "delta": 20.0, "dir": -1, "quarterly": [298, 476]}, {"name": "Comments", "sub": "conversation", "unit": "", "monthly": [9, 6, 20, 17, 19, 15], "monthlyDisp": [9, 6, 20, 17, 19, 15], "value": "19", "delta": 11.8, "dir": 1, "quarterly": [35, 51]}, {"name": "Reactions", "sub": "lightweight engagement", "unit": "", "monthly": [398, 313, 744, 709, 562, 727], "monthlyDisp": [398, 313, 744, 709, 562, 727], "value": "562", "delta": 20.7, "dir": -1, "quarterly": [1455, 1998]}, {"name": "Video Views", "sub": "LinkedIn (Sprout)", "unit": "", "monthly": [0, 2056, 0, 0, 0, 0], "monthlyDisp": [0, 2056, 0, 0, 0, 0], "value": "0", "delta": 0, "dir": 0, "quarterly": [2056, 0]}], "secondary": [{"name": "Profile Impressions", "sub": "brand interest", "unit": "", "monthly": [26310, 21715, 38476, 34622, 32237, 30350], "monthlyDisp": [26310, 21715, 38476, 34622, 32237, 30350], "value": "32,237", "delta": 6.9, "dir": -1, "quarterly": [86501, 97209]}, {"name": "Net Follower Growth", "sub": "new followers", "unit": "", "monthly": [351, 400, 655, 651, 578, 608], "monthlyDisp": [351, 400, 655, 651, 578, 608], "value": "578", "delta": 11.2, "dir": -1, "quarterly": [1406, 1837]}, {"name": "Total Followers", "sub": "audience size", "unit": "", "monthly": [21408, 21788, 22437, 23053, 23621, 24321], "monthlyDisp": [21408, 21788, 22437, 23053, 23621, 24321], "value": "23,621", "delta": 2.5, "dir": 1, "quarterly": [22437, 24321]}], "traffic": [{"name": "Sessions", "sub": "visits from organic", "unit": "", "monthly": [1902, 1403, 1776, 2194, 2444, 1655], "monthlyDisp": [1902, 1403, 1776, 2194, 2444, 1655], "value": "2,444", "delta": 11.4, "dir": 1, "quarterly": [5081, 6293]}, {"name": "Total Users", "sub": "unique visitors", "unit": "", "monthly": [1557, 1159, 1437, 1675, 1791, 1267], "monthlyDisp": [1557, 1159, 1437, 1675, 1791, 1267], "value": "1,791", "delta": 6.9, "dir": 1, "quarterly": [4153, 4733]}, {"name": "New Users", "sub": "first-time visitors", "unit": "", "monthly": [1419, 1019, 1267, 1467, 1549, 1115], "monthlyDisp": [1419, 1019, 1267, 1467, 1549, 1115], "value": "1,549", "delta": 5.6, "dir": 1, "quarterly": [3705, 4131]}, {"name": "Engagement Rate", "sub": "engaged sessions", "unit": "%", "monthly": [61.4, 62.3, 61.5, 64.0, 63.9, 58.2], "monthlyDisp": [61.4, 62.3, 61.5, 64.0, 63.9, 58.2], "value": "63.9%", "delta": 0.2, "dir": -1, "quarterly": [61.7, 62.4]}, {"name": "Session Time", "sub": "avg. duration", "unit": "time", "monthly": [191, 190, 169, 212, 232, 195], "monthlyDisp": ["3:11", "3:10", "2:49", "3:32", "3:52", "3:15"], "value": "3:52", "delta": 9.4, "dir": 1, "quarterly": [183, 215]}, {"name": "Organic Share", "sub": "% of total sessions", "unit": "%", "monthly": [14.7, 11.5, 12.3, 16.0, 16.1, 14.4], "monthlyDisp": [14.7, 11.5, 12.3, 16.0, 16.1, 14.4], "value": "16.1%", "delta": 0.6, "dir": 1, "quarterly": [12.8, 15.6]}], "timeMonthly": {"sessTimeSec": [191, 190, 169, 212, 232, 195]}};
+const DATA={"months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun*"], "quarters": ["Q1", "Q2 QTD"], "primary": [{"name": "Engagement Rate", "sub": "per impression", "unit": "%", "monthly": [8.8, 12.6, 13.1, 8.3, 13.4, 13.4], "monthlyDisp": [8.8, 12.6, 13.1, 8.3, 13.4, 13.4], "value": "13.4", "delta": 61.4, "dir": 1, "quarterly": [11.7, 11.3]}, {"name": "Content Reach", "sub": "impressions", "unit": "", "monthly": [23145, 21052, 35600, 37018, 27321, 27329], "monthlyDisp": [23145, 21052, 35600, 37018, 27321, 27329], "value": "27,321", "delta": 26.2, "dir": -1, "quarterly": [79797, 91787]}, {"name": "Shares", "sub": "amplification", "unit": "", "monthly": [94, 66, 138, 175, 140, 162], "monthlyDisp": [94, 66, 138, 175, 140, 162], "value": "140", "delta": 20.0, "dir": -1, "quarterly": [298, 477]}, {"name": "Comments", "sub": "conversation", "unit": "", "monthly": [9, 6, 20, 17, 19, 15], "monthlyDisp": [9, 6, 20, 17, 19, 15], "value": "19", "delta": 11.8, "dir": 1, "quarterly": [35, 51]}, {"name": "Reactions", "sub": "lightweight engagement", "unit": "", "monthly": [398, 313, 744, 709, 562, 745], "monthlyDisp": [398, 313, 744, 709, 562, 745], "value": "562", "delta": 20.7, "dir": -1, "quarterly": [1455, 2016]}, {"name": "Video Views", "sub": "LinkedIn (Sprout)", "unit": "", "monthly": [0, 2056, 0, 0, 0, 0], "monthlyDisp": [0, 2056, 0, 0, 0, 0], "value": "0", "delta": 0, "dir": 0, "quarterly": [2056, 0]}], "secondary": [{"name": "Profile Impressions", "sub": "brand interest", "unit": "", "monthly": [26310, 21715, 38476, 34622, 32237, 32500], "monthlyDisp": [26310, 21715, 38476, 34622, 32237, 32500], "value": "32,237", "delta": 6.9, "dir": -1, "quarterly": [86501, 99357]}, {"name": "Net Follower Growth", "sub": "new followers", "unit": "", "monthly": [351, 400, 655, 651, 578, 709], "monthlyDisp": [351, 400, 655, 651, 578, 709], "value": "578", "delta": 11.2, "dir": -1, "quarterly": [1406, 1938]}, {"name": "Total Followers", "sub": "audience size", "unit": "", "monthly": [21408, 21788, 22437, 23053, 23621, 24341], "monthlyDisp": [21408, 21788, 22437, 23053, 23621, 24341], "value": "23,621", "delta": 2.5, "dir": 1, "quarterly": [22437, 24341]}], "traffic": [{"name": "Sessions", "sub": "visits from organic", "unit": "", "monthly": [1902, 1403, 1776, 2194, 2444, 1655], "monthlyDisp": [1902, 1403, 1776, 2194, 2444, 1655], "value": "2,444", "delta": 11.4, "dir": 1, "quarterly": [5081, 6293]}, {"name": "Total Users", "sub": "unique visitors", "unit": "", "monthly": [1557, 1159, 1437, 1675, 1791, 1267], "monthlyDisp": [1557, 1159, 1437, 1675, 1791, 1267], "value": "1,791", "delta": 6.9, "dir": 1, "quarterly": [4153, 4733]}, {"name": "New Users", "sub": "first-time visitors", "unit": "", "monthly": [1419, 1019, 1267, 1467, 1549, 1115], "monthlyDisp": [1419, 1019, 1267, 1467, 1549, 1115], "value": "1,549", "delta": 5.6, "dir": 1, "quarterly": [3705, 4131]}, {"name": "Engagement Rate", "sub": "engaged sessions", "unit": "%", "monthly": [61.4, 62.3, 61.5, 64.0, 63.9, 58.2], "monthlyDisp": [61.4, 62.3, 61.5, 64.0, 63.9, 58.2], "value": "63.9%", "delta": 0.2, "dir": -1, "quarterly": [61.7, 62.4]}, {"name": "Session Time", "sub": "avg. duration", "unit": "time", "monthly": [191, 190, 169, 212, 232, 195], "monthlyDisp": ["3:11", "3:10", "2:49", "3:32", "3:52", "3:15"], "value": "3:52", "delta": 9.4, "dir": 1, "quarterly": [183, 215]}, {"name": "Organic Share", "sub": "% of total sessions", "unit": "%", "monthly": [14.7, 11.5, 12.3, 16.0, 16.1, 14.4], "monthlyDisp": [14.7, 11.5, 12.3, 16.0, 16.1, 14.4], "value": "16.1%", "delta": 0.6, "dir": 1, "quarterly": [12.8, 15.6]}], "timeMonthly": {"sessTimeSec": [191, 190, 169, 212, 232, 195]}};
 
 function lineSVG(vals,labels,disp){
   const W=300,H=110,padL=18,padR=18,padT=22,padB=18;
   const mn=Math.min(...vals),mx=Math.max(...vals);const span=(mx-mn)||1;
   const n=vals.length;const ux=(W-padL-padR)/(n-1);
-  const x=i=>padL+i*ux;const y=v=>padT+(1-(v-mn)/span)*(H-padT-padB);
+  // leave ~25% headroom below the lowest point so the minimum doesn't sit on the axis (and read as zero)
+  const usable=(H-padT-padB)*0.75;
+  const x=i=>padL+i*ux;const y=v=>padT+(1-(v-mn)/span)*usable;
   let pts=vals.map((v,i)=>`${x(i).toFixed(1)},${y(v).toFixed(1)}`);
   // solid path for complete months (0..n-2), dashed to last (MTD)
   const solid=pts.slice(0,n-1).join(" ");
@@ -176,7 +221,7 @@ renderTrend("trendPrimary",DATA.primary);
 renderTrend("trendSecondary",DATA.secondary);
 renderTrend("trendTraffic",DATA.traffic);
 
-document.getElementById("asof").innerHTML="As of June 26, 2026 &middot; Snapshot windows: last completed week (Jun 14&ndash;20), MTD (Jun 1&ndash;26), QTD (Apr 1&ndash;26)<br><span style='color:#9a7a8a'>Snapshot deltas vs the preceding equal period. Trend headline = latest complete month vs prior month. * Jun = month to date.</span>";
+document.getElementById("asof").innerHTML="As of June 26, 2026 &middot; Snapshot windows: last completed week (Jun 14&ndash;20), MTD (Jun 1&ndash;26), QTD (Apr 1 &ndash; Jun 26)<br><span style='color:#9a7a8a'>Snapshot deltas vs the preceding equal period. Trend headline = latest complete month vs prior month. * Jun = month to date.</span>";
 </script>
 </body>
 </html>
