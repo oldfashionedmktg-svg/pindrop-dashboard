@@ -131,27 +131,31 @@ document.getElementById("share").innerHTML=SHARE.map(s=>`<div class="sharecard">
 /* ---------- TREND DATA ---------- */
 const DATA={"months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun*"], "quarters": ["Q1", "Q2 QTD"], "primary": [{"name": "Engagement Rate", "sub": "per impression", "unit": "%", "monthly": [8.8, 12.6, 13.1, 8.3, 13.4, 13.7], "monthlyDisp": [8.8, 12.6, 13.1, 8.3, 13.4, 13.7], "value": "13.4", "delta": 61.4, "dir": 1, "quarterly": [11.7, 11.4]}, {"name": "Content Reach", "sub": "impressions", "unit": "", "monthly": [23145, 21052, 35600, 37018, 27321, 26322], "monthlyDisp": [23145, 21052, 35600, 37018, 27321, 26322], "value": "27,321", "delta": 26.2, "dir": -1, "quarterly": [79797, 90661]}, {"name": "Shares", "sub": "amplification", "unit": "", "monthly": [94, 66, 138, 175, 140, 161], "monthlyDisp": [94, 66, 138, 175, 140, 161], "value": "140", "delta": 20.0, "dir": -1, "quarterly": [298, 476]}, {"name": "Comments", "sub": "conversation", "unit": "", "monthly": [9, 6, 20, 17, 19, 15], "monthlyDisp": [9, 6, 20, 17, 19, 15], "value": "19", "delta": 11.8, "dir": 1, "quarterly": [35, 51]}, {"name": "Reactions", "sub": "lightweight engagement", "unit": "", "monthly": [398, 313, 744, 709, 562, 727], "monthlyDisp": [398, 313, 744, 709, 562, 727], "value": "562", "delta": 20.7, "dir": -1, "quarterly": [1455, 1998]}, {"name": "Video Views", "sub": "LinkedIn (Sprout)", "unit": "", "monthly": [0, 2056, 0, 0, 0, 0], "monthlyDisp": [0, 2056, 0, 0, 0, 0], "value": "0", "delta": 0, "dir": 0, "quarterly": [2056, 0]}], "secondary": [{"name": "Profile Impressions", "sub": "brand interest", "unit": "", "monthly": [26310, 21715, 38476, 34622, 32237, 30350], "monthlyDisp": [26310, 21715, 38476, 34622, 32237, 30350], "value": "32,237", "delta": 6.9, "dir": -1, "quarterly": [86501, 97209]}, {"name": "Net Follower Growth", "sub": "new followers", "unit": "", "monthly": [351, 400, 655, 651, 578, 608], "monthlyDisp": [351, 400, 655, 651, 578, 608], "value": "578", "delta": 11.2, "dir": -1, "quarterly": [1406, 1837]}, {"name": "Total Followers", "sub": "audience size", "unit": "", "monthly": [21408, 21788, 22437, 23053, 23621, 24321], "monthlyDisp": [21408, 21788, 22437, 23053, 23621, 24321], "value": "23,621", "delta": 2.5, "dir": 1, "quarterly": [22437, 24321]}], "traffic": [{"name": "Sessions", "sub": "visits from organic", "unit": "", "monthly": [1902, 1403, 1776, 2194, 2444, 1655], "monthlyDisp": [1902, 1403, 1776, 2194, 2444, 1655], "value": "2,444", "delta": 11.4, "dir": 1, "quarterly": [5081, 6293]}, {"name": "Total Users", "sub": "unique visitors", "unit": "", "monthly": [1557, 1159, 1437, 1675, 1791, 1267], "monthlyDisp": [1557, 1159, 1437, 1675, 1791, 1267], "value": "1,791", "delta": 6.9, "dir": 1, "quarterly": [4153, 4733]}, {"name": "New Users", "sub": "first-time visitors", "unit": "", "monthly": [1419, 1019, 1267, 1467, 1549, 1115], "monthlyDisp": [1419, 1019, 1267, 1467, 1549, 1115], "value": "1,549", "delta": 5.6, "dir": 1, "quarterly": [3705, 4131]}, {"name": "Engagement Rate", "sub": "engaged sessions", "unit": "%", "monthly": [61.4, 62.3, 61.5, 64.0, 63.9, 58.2], "monthlyDisp": [61.4, 62.3, 61.5, 64.0, 63.9, 58.2], "value": "63.9%", "delta": 0.2, "dir": -1, "quarterly": [61.7, 62.4]}, {"name": "Session Time", "sub": "avg. duration", "unit": "time", "monthly": [191, 190, 169, 212, 232, 195], "monthlyDisp": ["3:11", "3:10", "2:49", "3:32", "3:52", "3:15"], "value": "3:52", "delta": 9.4, "dir": 1, "quarterly": [183, 215]}, {"name": "Organic Share", "sub": "% of total sessions", "unit": "%", "monthly": [14.7, 11.5, 12.3, 16.0, 16.1, 14.4], "monthlyDisp": [14.7, 11.5, 12.3, 16.0, 16.1, 14.4], "value": "16.1%", "delta": 0.6, "dir": 1, "quarterly": [12.8, 15.6]}], "timeMonthly": {"sessTimeSec": [191, 190, 169, 212, 232, 195]}};
 
-function lineSVG(vals,labels){
-  const W=300,H=92,padL=6,padR=6,padT=10,padB=16;
+function lineSVG(vals,labels,disp){
+  const W=300,H=110,padL=18,padR=18,padT=22,padB=18;
   const mn=Math.min(...vals),mx=Math.max(...vals);const span=(mx-mn)||1;
   const n=vals.length;const ux=(W-padL-padR)/(n-1);
   const x=i=>padL+i*ux;const y=v=>padT+(1-(v-mn)/span)*(H-padT-padB);
   let pts=vals.map((v,i)=>`${x(i).toFixed(1)},${y(v).toFixed(1)}`);
   // solid path for complete months (0..n-2), dashed to last (MTD)
   const solid=pts.slice(0,n-1).join(" ");
+  const base=H-padB+0.5;
   let dots=vals.map((v,i)=>{const last=i===n-1;return `<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="${last?3.2:2.6}" fill="${last?'#fff':'#C9006B'}" stroke="#C9006B" stroke-width="${last?1.6:0}"/>`;}).join("");
-  let labs=labels.map((l,i)=>`<text x="${x(i).toFixed(1)}" y="${H-3}" font-size="8" text-anchor="middle" fill="#9a7a8a">${l}</text>`).join("");
-  return `<svg viewBox="0 0 ${W} ${H}"><polyline points="${solid}" fill="none" stroke="#C9006B" stroke-width="1.8"/><polyline points="${pts[n-2]} ${pts[n-1]}" fill="none" stroke="#C9006B" stroke-width="1.4" stroke-dasharray="3 2"/>${dots}${labs}</svg>`;
+  // value labels above each point
+  let vlabs=vals.map((v,i)=>{const d=disp?disp[i]:v;return `<text x="${x(i).toFixed(1)}" y="${(y(v)-6).toFixed(1)}" font-size="8" text-anchor="middle" fill="#1d1d28" font-weight="700">${fmtShort(d)}</text>`;}).join("");
+  // month (x-axis) labels
+  let labs=labels.map((l,i)=>`<text x="${x(i).toFixed(1)}" y="${H-4}" font-size="8.5" text-anchor="middle" fill="#6b6b7b" font-weight="600">${l}</text>`).join("");
+  return `<svg viewBox="0 0 ${W} ${H}"><line x1="${padL-8}" y1="${base}" x2="${W-padR+8}" y2="${base}" stroke="#e7d3df" stroke-width="1"/><polyline points="${solid}" fill="none" stroke="#C9006B" stroke-width="1.8"/><polyline points="${pts[n-2]} ${pts[n-1]}" fill="none" stroke="#C9006B" stroke-width="1.4" stroke-dasharray="3 2"/>${dots}${vlabs}${labs}</svg>`;
 }
 function barSVG(vals,labels){
-  const W=116,H=92,padT=14,padB=16;const mx=Math.max(...vals,1);
-  const bw=30,gap=24,x0=(W-(bw*2+gap))/2;
+  const W=116,H=110,padT=18,padB=18;const mx=Math.max(...vals,1);
+  const bw=30,gap=24,x0=(W-(bw*2+gap))/2;const base=H-padB;
   const cols=["#E8341C","#C9006B"];
-  let bars=vals.map((v,i)=>{const h=(v<=0?0:(v/mx)*(H-padT-padB));const x=x0+i*(bw+gap);const y=H-padB-h;
+  let bars=vals.map((v,i)=>{const h=(v<=0?0:(v/mx)*(H-padT-padB));const x=x0+i*(bw+gap);const y=base-h;
     return `<rect x="${x}" y="${y.toFixed(1)}" width="${bw}" height="${h.toFixed(1)}" rx="3" fill="${cols[i]}"/>`+
       `<text x="${x+bw/2}" y="${(y-3).toFixed(1)}" font-size="8.5" text-anchor="middle" fill="#1d1d28" font-weight="700">${fmtShort(v)}</text>`+
-      `<text x="${x+bw/2}" y="${H-3}" font-size="8" text-anchor="middle" fill="#9a7a8a">${labels[i]}</text>`;}).join("");
-  return `<svg viewBox="0 0 ${W} ${H}">${bars}</svg>`;
+      `<text x="${x+bw/2}" y="${H-4}" font-size="8" text-anchor="middle" fill="#9a7a8a">${labels[i]}</text>`;}).join("");
+  return `<svg viewBox="0 0 ${W} ${H}"><line x1="6" y1="${(base+0.5).toFixed(1)}" x2="${W-6}" y2="${(base+0.5).toFixed(1)}" stroke="#e7d3df" stroke-width="1"/>${bars}</svg>`;
 }
 function fmtShort(v){if(typeof v!=="number")return v;if(Math.abs(v)>=1000)return (v/1000).toFixed(v>=10000?0:1)+"k";return v;}
 
@@ -163,7 +167,7 @@ function kcard(k){
     <div class="khead"><div class="kname">${k.name}<small>${k.sub}</small></div>
       <div class="kval">${k.value}<span class="kd ${dirCls}">${deltaTxt}</span></div></div>
     <div class="charts">
-      <div class="line"><div class="ctitle">Monthly &mdash; 2026</div>${lineSVG(k.monthly,DATA.months)}</div>
+      <div class="line"><div class="ctitle">Monthly &mdash; 2026</div>${lineSVG(k.monthly,DATA.months,k.monthlyDisp)}</div>
       <div class="bar"><div class="ctitle">Quarter</div>${barSVG(k.quarterly,DATA.quarters)}</div>
     </div></div>`;
 }
