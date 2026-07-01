@@ -51,6 +51,11 @@ td.metric small{display:block;font-weight:400;color:var(--muted);font-size:11.5p
 .charts .line{flex:1 1 auto;min-width:0}
 .charts .bar{flex:0 0 116px}
 .ctitle{font-size:9.5px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);font-weight:700;margin:0 0 2px 2px}
+.benchcap{font-size:9.5px;color:#9a7a8a;margin-top:8px;display:flex;align-items:center;gap:6px;line-height:1.35}
+.benchcap .bswatch{display:inline-block;width:16px;height:9px;background:rgba(201,0,107,.10);border-top:1.5px dashed rgba(201,0,107,.55);flex:0 0 auto}
+.benchcap b{color:var(--ink);font-weight:700}
+.benchcap .bsub{opacity:.75}
+.benchcap.muted{color:#b196a4}
 svg{display:block;width:100%;height:auto;overflow:visible}
 .foot{color:var(--muted);font-size:11.5px;margin-top:34px;border-top:1px solid var(--line);padding-top:14px;line-height:1.6}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--magenta);margin-right:7px;vertical-align:middle}
@@ -69,13 +74,30 @@ details.gloss[open]>summary{border-bottom:1px solid var(--line)}
 .gloss.sub>summary .dot{display:none}
 .gloss.sub .glossbody{padding:4px 14px 12px}
 .gloss.sub .glossitem{margin:0 0 7px}
+/* tabs */
+.tabbar{display:flex;gap:6px;margin:20px 0 4px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tabbtn{appearance:none;background:none;border:none;cursor:pointer;font:inherit;font-size:13.5px;font-weight:700;
+  color:var(--muted);padding:10px 16px;border-radius:10px 10px 0 0;border-bottom:2.5px solid transparent;margin-bottom:-1px}
+.tabbtn:hover{color:var(--ink)}
+.tabbtn.active{color:var(--magenta);border-bottom-color:var(--magenta);background:linear-gradient(180deg,rgba(201,0,107,.06),transparent)}
+.tabpane{display:none}
+.tabpane.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.subtabs{display:inline-flex;gap:4px;background:#fbe9f2;border:1px solid var(--line);border-radius:999px;padding:4px;margin:18px 0 6px}
+.subtab{appearance:none;background:none;border:none;cursor:pointer;font:inherit;font-size:12.5px;font-weight:700;
+  color:var(--muted);padding:7px 18px;border-radius:999px}
+.subtab.active{background:var(--magenta);color:#fff}
+.finalhead{font-size:18px;font-weight:800;letter-spacing:-.2px;margin:6px 0 2px}
+.finalsub{color:var(--muted);font-size:12.5px;margin:0 0 6px}
+.finalpane{display:none}
+.finalpane.active{display:block;animation:fade .25s ease}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="topbar"></div>
   <h1>Pindrop &mdash; Social Media KPIs</h1>
-  <p class="sub">Current snapshot &middot; Monthly &amp; quarterly trends (2026 to date)</p>
+  <p class="sub">Snapshot &middot; Monthly &amp; quarterly trends &middot; Final completed-period numbers (2026)</p>
   <p class="asof" id="asof"></p>
 
   <details class="gloss">
@@ -87,11 +109,23 @@ details.gloss[open]>summary{border-bottom:1px solid var(--line)}
       <p class="glossitem"><b>QTD (quarter to date)</b> &mdash; the 1st of the current quarter through today.</p>
       <div class="glossgrp">Reading the deltas</div>
       <p class="glossitem"><b>Snapshot &Delta;</b> &mdash; change vs the immediately preceding equal-length period (this week vs last week, etc.).</p>
-      <p class="glossitem"><b>Trend headline</b> &mdash; latest complete month vs the prior month; the line chart's hollow June point is month-to-date.</p>
+      <p class="glossitem"><b>Trend headline</b> &mdash; latest complete month (June 2026) vs the prior month.</p>
+      <p class="glossitem"><b>Final numbers tab</b> &mdash; totals for the period that just closed: completed June (vs May) and completed Q2 (vs Q1).</p>
+      <div class="glossgrp">Benchmarks</div>
+      <p class="glossitem"><b>Benchmark band</b> &mdash; on each primary &amp; secondary line chart, the shaded magenta band is the <b>typical monthly range</b> for 2026, derived from the complete months Jan&ndash;May as the mean &plusmn; 1 standard deviation; the dashed line is the mean. A point inside the band is a normal month; above the band is a strong month, below is a soft one. <b>Total Followers</b> (cumulative) and <b>Video Views</b> (unreliable in Sprout) have no band.</p>
     </div>
   </details>
 
+  <!-- TABS -->
+  <div class="tabbar" role="tablist">
+    <button class="tabbtn active" data-tab="snapshot">Snapshot</button>
+    <button class="tabbtn" data-tab="trends">Trends</button>
+    <button class="tabbtn" data-tab="final">Final numbers</button>
+  </div>
+
   <!-- SNAPSHOT -->
+  <div id="tab-snapshot" class="tabpane active">
+  <div class="note" style="margin:14px 0 4px"><b>Snapshot</b> reflects the most recent weekly pull (Jun 29). For completed-period totals now that June and Q2 have closed, see the <b>Final numbers</b> tab.</div>
   <div class="section-title"><span class="dot"></span>Current Snapshot</div>
   <div class="subsection">Primary KPIs &mdash; LinkedIn (post-level &middot; Post Performance)</div>
   <details class="gloss sub">
@@ -132,9 +166,12 @@ details.gloss[open]>summary{border-bottom:1px solid var(--line)}
   <div class="subsection">Organic Social + Organic Video &mdash; share of total sessions</div>
   <div class="share" id="share"></div>
 
+  </div><!-- /tab-snapshot -->
+
   <!-- TRENDS -->
+  <div id="tab-trends" class="tabpane">
   <div class="section-title"><span class="dot" style="background:var(--crimson)"></span>Trends &mdash; Primary KPIs (LinkedIn)</div>
-  <div class="note" id="ytnote" style="margin-top:0;margin-bottom:14px"><b>Reading the trends:</b> each headline value is the latest <b>complete</b> month (May 2026) with its change vs the prior month. Line charts show every month Jan&ndash;Jun 2026; <b>Jun is month-to-date</b> (hollow point) so it reads low. Bars compare Q1 (Jan&ndash;Mar) to Q2 quarter-to-date.</div>
+  <div class="note" id="ytnote" style="margin-top:0;margin-bottom:14px"><b>Reading the trends:</b> each headline value is the latest <b>complete</b> month (June 2026) with its change vs the prior month. Line charts show every month Jan&ndash;Jun 2026 (all complete). Bars compare Q1 (Jan&ndash;Mar) to Q2 (Apr&ndash;Jun), both final. The shaded magenta band on each primary &amp; secondary chart is the <b>2026 benchmark</b> &mdash; the typical monthly range (mean &plusmn; 1 SD) from the complete months Jan&ndash;May; the dashed line is the mean.</div>
   <div class="kgrid" id="trendPrimary"></div>
 
   <div class="section-title"><span class="dot" style="background:var(--crimson)"></span>Trends &mdash; Secondary KPIs</div>
@@ -142,9 +179,43 @@ details.gloss[open]>summary{border-bottom:1px solid var(--line)}
 
   <div class="section-title"><span class="dot" style="background:var(--crimson)"></span>Trends &mdash; Traffic (Organic Social + Organic Video)</div>
   <div class="kgrid" id="trendTraffic"></div>
+  </div><!-- /tab-trends -->
+
+  <!-- FINAL -->
+  <div id="tab-final" class="tabpane">
+    <div class="subtabs">
+      <button class="subtab active" data-final="month">Monthly &mdash; June</button>
+      <button class="subtab" data-final="quarter">Quarterly &mdash; Q2</button>
+    </div>
+
+    <div id="final-month" class="finalpane active">
+      <div class="finalhead">June 2026 &mdash; final</div>
+      <p class="finalsub">Completed month (Jun 1&ndash;30). Deltas vs May 2026.</p>
+      <div class="subsection">Primary KPIs &mdash; LinkedIn (post-level)</div>
+      <div class="card"><table><thead><tr class="fhead"></tr></thead><tbody id="fmPrimary"></tbody></table></div>
+      <div class="subsection">Secondary KPIs (profile-level &middot; LinkedIn Pages)</div>
+      <div class="card"><table><thead><tr class="fhead"></tr></thead><tbody id="fmSecondary"></tbody></table></div>
+      <div class="subsection">Traffic to Site &mdash; Organic Social + Organic Video (GA4)</div>
+      <div class="card"><table><thead><tr class="fhead"></tr></thead><tbody id="fmTraffic"></tbody></table></div>
+      <div class="share" id="fmShare" style="margin-top:14px"></div>
+    </div>
+
+    <div id="final-quarter" class="finalpane">
+      <div class="finalhead">Q2 2026 (Apr&ndash;Jun) &mdash; final</div>
+      <p class="finalsub">Completed quarter (Apr 1&ndash;Jun 30). Deltas vs Q1 2026 (Jan&ndash;Mar).</p>
+      <div class="subsection">Primary KPIs &mdash; LinkedIn (post-level)</div>
+      <div class="card"><table><thead><tr class="fhead"></tr></thead><tbody id="fqPrimary"></tbody></table></div>
+      <div class="subsection">Secondary KPIs (profile-level &middot; LinkedIn Pages)</div>
+      <div class="card"><table><thead><tr class="fhead"></tr></thead><tbody id="fqSecondary"></tbody></table></div>
+      <div class="subsection">Traffic to Site &mdash; Organic Social + Organic Video (GA4)</div>
+      <div class="card"><table><thead><tr class="fhead"></tr></thead><tbody id="fqTraffic"></tbody></table></div>
+      <div class="share" id="fqShare" style="margin-top:14px"></div>
+    </div>
+    <div class="note" style="margin-top:14px"><b>Sources:</b> LinkedIn KPIs &mdash; Sprout Social (Post Performance + LinkedIn Pages, LinkedIn only). Traffic &mdash; Google Looker Studio (GA4), Organic Social + Organic Video combined. Pulled Jul 1, 2026. Video views/saves unreliable in Sprout (known data issue). This tab is refreshed on the 1st of each month (monthly) and the 1st of each quarter (quarterly).</div>
+  </div><!-- /tab-final -->
 
   <div class="foot">
-    <b>Sources:</b> Primary &mdash; Sprout Social Cross-Network &rsaquo; Post Performance (LinkedIn). Secondary &mdash; Sprout Social LinkedIn Pages. Traffic &mdash; Google Looker Studio (GA4), Organic Social + Organic Video channels combined. Snapshot pulled Jun 29, 2026 (traffic QTD Apr 1&ndash;Jun 28; traffic last-week &amp; MTD carry the prior pull). LinkedIn video views/saves are unreliable in Sprout (known data issue). Session time = avg. session duration. Refreshed weekly.
+    <b>Sources:</b> Primary &mdash; Sprout Social Cross-Network &rsaquo; Post Performance (LinkedIn). Secondary &mdash; Sprout Social LinkedIn Pages. Traffic &mdash; Google Looker Studio (GA4), Organic Social + Organic Video channels combined. Snapshot tab pulled Jun 29, 2026 (refreshed weekly). Final numbers tab pulled Jul 1, 2026: completed June and Q2 (refreshed on the 1st of each month and each quarter). LinkedIn video views/saves are unreliable in Sprout (known data issue). Session time = avg. session duration.
   </div>
 </div>
 
@@ -186,25 +257,88 @@ renderSnap("snapPrimary",SNAP_PRIMARY);renderSnap("snapSecondary",SNAP_SECONDARY
 document.getElementById("share").innerHTML=SHARE.map(s=>`<div class="sharecard"><div class="lbl">${s[0]}</div><div class="big">${s[1]}</div><div class="meta">${s[2]}</div></div>`).join("");
 
 /* ---------- TREND DATA ---------- */
-const DATA={"months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun*"], "quarters": ["Q1", "Q2 QTD"], "primary": [{"name": "Engagement Rate", "sub": "per impression", "unit": "%", "monthly": [8.8, 12.6, 13.1, 8.3, 13.4, 13.1], "monthlyDisp": [8.8, 12.6, 13.1, 8.3, 13.4, 13.1], "value": "13.4", "delta": 61.4, "dir": 1, "quarterly": [11.7, 11.3]}, {"name": "Content Reach", "sub": "impressions", "unit": "", "monthly": [23145, 21052, 35600, 37018, 27321, 28941], "monthlyDisp": [23145, 21052, 35600, 37018, 27321, 28941], "value": "27,321", "delta": 26.2, "dir": -1, "quarterly": [79797, 93426]}, {"name": "Shares", "sub": "amplification", "unit": "", "monthly": [94, 66, 138, 175, 140, 163], "monthlyDisp": [94, 66, 138, 175, 140, 163], "value": "140", "delta": 20.0, "dir": -1, "quarterly": [298, 478]}, {"name": "Comments", "sub": "conversation", "unit": "", "monthly": [9, 6, 20, 17, 19, 15], "monthlyDisp": [9, 6, 20, 17, 19, 15], "value": "19", "delta": 11.8, "dir": 1, "quarterly": [35, 51]}, {"name": "Reactions", "sub": "lightweight engagement", "unit": "", "monthly": [398, 313, 744, 709, 562, 772], "monthlyDisp": [398, 313, 744, 709, 562, 772], "value": "562", "delta": 20.7, "dir": -1, "quarterly": [1455, 2042]}, {"name": "Video Views", "sub": "LinkedIn (Sprout)", "unit": "", "monthly": [0, 2056, 0, 0, 0, 0], "monthlyDisp": [0, 2056, 0, 0, 0, 0], "value": "0", "delta": 0, "dir": 0, "quarterly": [2056, 0]}], "secondary": [{"name": "Profile Impressions", "sub": "brand interest", "unit": "", "monthly": [26310, 21715, 38476, 34622, 32237, 35059], "monthlyDisp": [26310, 21715, 38476, 34622, 32237, 35059], "value": "32,237", "delta": 6.9, "dir": -1, "quarterly": [86501, 101916]}, {"name": "Net Follower Growth", "sub": "new followers", "unit": "", "monthly": [351, 400, 655, 651, 578, 731], "monthlyDisp": [351, 400, 655, 651, 578, 731], "value": "578", "delta": 11.2, "dir": -1, "quarterly": [1406, 1960]}, {"name": "Total Followers", "sub": "audience size", "unit": "", "monthly": [21408, 21788, 22437, 23053, 23621, 24366], "monthlyDisp": [21408, 21788, 22437, 23053, 23621, 24366], "value": "23,621", "delta": 2.5, "dir": 1, "quarterly": [22437, 24366]}], "traffic": [{"name": "Sessions", "sub": "visits from organic", "unit": "", "monthly": [1902, 1403, 1776, 2194, 2444, 1816], "monthlyDisp": [1902, 1403, 1776, 2194, 2444, 1816], "value": "2,444", "delta": 11.4, "dir": 1, "quarterly": [5081, 6454]}, {"name": "Total Users", "sub": "unique visitors", "unit": "", "monthly": [1557, 1159, 1437, 1675, 1791, 1120], "monthlyDisp": [1557, 1159, 1437, 1675, 1791, 1120], "value": "1,791", "delta": 6.9, "dir": 1, "quarterly": [4153, 4586]}, {"name": "New Users", "sub": "first-time visitors", "unit": "", "monthly": [1419, 1019, 1267, 1467, 1549, 1205], "monthlyDisp": [1419, 1019, 1267, 1467, 1549, 1205], "value": "1,549", "delta": 5.6, "dir": 1, "quarterly": [3705, 4221]}, {"name": "Engagement Rate", "sub": "engaged sessions", "unit": "%", "monthly": [61.4, 62.3, 61.5, 64.0, 63.9, 58.2], "monthlyDisp": [61.4, 62.3, 61.5, 64.0, 63.9, 58.2], "value": "63.9%", "delta": 0.2, "dir": -1, "quarterly": [61.7, 62.8]}, {"name": "Session Time", "sub": "avg. duration", "unit": "time", "monthly": [191, 190, 169, 212, 232, 195], "monthlyDisp": ["3:11", "3:10", "2:49", "3:32", "3:52", "3:15"], "value": "3:52", "delta": 9.4, "dir": 1, "quarterly": [183, 213]}, {"name": "Organic Share", "sub": "% of total sessions", "unit": "%", "monthly": [14.7, 11.5, 12.3, 16.0, 16.1, 14.4], "monthlyDisp": [14.7, 11.5, 12.3, 16.0, 16.1, 14.4], "value": "16.1%", "delta": 0.6, "dir": 1, "quarterly": [12.8, 15.6]}], "timeMonthly": {"sessTimeSec": [191, 190, 169, 212, 232, 195]}};
+const DATA={"months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"], "quarters": ["Q1", "Q2"], "primary": [{"name": "Engagement Rate", "sub": "per impression", "unit": "%", "monthly": [8.8, 12.6, 13.1, 8.3, 13.4, 12.7], "monthlyDisp": [8.8, 12.6, 13.1, 8.3, 13.4, 12.7], "value": "12.7", "delta": 5.2, "dir": -1, "quarterly": [11.7, 11.2]}, {"name": "Content Reach", "sub": "impressions", "unit": "", "monthly": [23145, 21052, 35600, 37018, 27321, 30565], "monthlyDisp": [23145, 21052, 35600, 37018, 27321, 30565], "value": "30,565", "delta": 11.9, "dir": 1, "quarterly": [79797, 95106]}, {"name": "Shares", "sub": "amplification", "unit": "", "monthly": [94, 66, 138, 175, 140, 173], "monthlyDisp": [94, 66, 138, 175, 140, 173], "value": "173", "delta": 23.6, "dir": 1, "quarterly": [298, 488]}, {"name": "Comments", "sub": "conversation", "unit": "", "monthly": [9, 6, 20, 17, 19, 15], "monthlyDisp": [9, 6, 20, 17, 19, 15], "value": "15", "delta": 21.1, "dir": -1, "quarterly": [35, 51]}, {"name": "Reactions", "sub": "lightweight engagement", "unit": "", "monthly": [398, 313, 744, 709, 562, 804], "monthlyDisp": [398, 313, 744, 709, 562, 804], "value": "804", "delta": 43.1, "dir": 1, "quarterly": [1455, 2074]}, {"name": "Video Views", "sub": "LinkedIn (Sprout)", "unit": "", "monthly": [0, 2056, 0, 0, 0, 0], "monthlyDisp": [0, 2056, 0, 0, 0, 0], "value": "0", "delta": 0, "dir": 0, "quarterly": [2056, 0]}], "secondary": [{"name": "Profile Impressions", "sub": "brand interest", "unit": "", "monthly": [26310, 21715, 38476, 34622, 32237, 36812], "monthlyDisp": [26310, 21715, 38476, 34622, 32237, 36812], "value": "36,812", "delta": 14.2, "dir": 1, "quarterly": [86501, 103669]}, {"name": "Net Follower Growth", "sub": "new followers", "unit": "", "monthly": [351, 400, 655, 651, 578, 766], "monthlyDisp": [351, 400, 655, 651, 578, 766], "value": "766", "delta": 32.5, "dir": 1, "quarterly": [1406, 1995]}, {"name": "Total Followers", "sub": "audience size", "unit": "", "monthly": [21408, 21788, 22437, 23053, 23621, 24400], "monthlyDisp": [21408, 21788, 22437, 23053, 23621, 24400], "value": "24,400", "delta": 3.3, "dir": 1, "quarterly": [22437, 24400]}], "traffic": [{"name": "Sessions", "sub": "visits from organic", "unit": "", "monthly": [1902, 1403, 1776, 2194, 2444, 1931], "monthlyDisp": [1902, 1403, 1776, 2194, 2444, 1931], "value": "1,931", "delta": 21.0, "dir": -1, "quarterly": [5081, 6589]}, {"name": "Total Users", "sub": "unique visitors", "unit": "", "monthly": [1557, 1159, 1437, 1675, 1791, 1480], "monthlyDisp": [1557, 1159, 1437, 1675, 1791, 1480], "value": "1,480", "delta": 17.4, "dir": -1, "quarterly": [4153, 4697]}, {"name": "New Users", "sub": "first-time visitors", "unit": "", "monthly": [1419, 1019, 1267, 1467, 1549, 1313], "monthlyDisp": [1419, 1019, 1267, 1467, 1549, 1313], "value": "1,313", "delta": 15.2, "dir": -1, "quarterly": [3705, 4329]}, {"name": "Engagement Rate", "sub": "engaged sessions", "unit": "%", "monthly": [61.4, 62.3, 61.5, 64.0, 63.9, 59.1], "monthlyDisp": [61.4, 62.3, 61.5, 64.0, 63.9, 59.1], "value": "59.1%", "delta": 7.5, "dir": -1, "quarterly": [61.7, 62.9]}, {"name": "Session Time", "sub": "avg. duration", "unit": "time", "monthly": [191, 190, 169, 212, 232, 194], "monthlyDisp": ["3:11", "3:10", "2:49", "3:32", "3:52", "3:14"], "value": "3:14", "delta": 16.4, "dir": -1, "quarterly": [183, 214]}, {"name": "Organic Share", "sub": "% of total sessions", "unit": "%", "monthly": [14.7, 11.5, 12.3, 16.0, 16.1, 14.3], "monthlyDisp": [14.7, 11.5, 12.3, 16.0, 16.1, 14.3], "value": "14.3%", "delta": 11.2, "dir": -1, "quarterly": [12.8, 15.5]}], "timeMonthly": {"sessTimeSec": [191, 190, 169, 212, 232, 194]}};
 
-function lineSVG(vals,labels,disp){
+/* ---------- FINAL (completed June + Q2) ---------- */
+const FINAL={
+ month:{primary:[
+   {m:"Engagement Rate",sub:"per impression",v:"12.7%",d:5.2,dir:-1},
+   {m:"Content Reach",sub:"impressions on posts",v:"30,565",d:11.9,dir:1},
+   {m:"Reactions",sub:"lightweight engagement",v:"804",d:43.1,dir:1},
+   {m:"Stickiness &mdash; Shares",sub:"amplification",v:"173",d:23.6,dir:1},
+   {m:"Stickiness &mdash; Comments",sub:"conversation",v:"15",d:21.1,dir:-1},
+   {m:"Video Views",sub:"LinkedIn (Sprout &ndash; unreliable)",v:"0",d:0,dir:0},
+  ],secondary:[
+   {m:"Profile Impressions",sub:"brand interest",v:"36,812",d:14.2,dir:1},
+   {m:"Channel Growth",sub:"net new followers",v:"+766",d:32.5,dir:1},
+   {m:"Total Followers",sub:"audience size",v:"24,400",d:3.3,dir:1},
+  ],traffic:[
+   {m:"Sessions",sub:"visits from organic",v:"1,931",d:21.0,dir:-1},
+   {m:"Total Users",sub:"unique visitors",v:"1,480",d:17.4,dir:-1},
+   {m:"New Users",sub:"first-time visitors",v:"1,313",d:15.2,dir:-1},
+   {m:"Engagement Rate",sub:"engaged sessions",v:"59.1%",d:7.5,dir:-1},
+   {m:"Session Time",sub:"avg. duration",v:"3:14",d:16.4,dir:-1},
+  ],share:["14.3%","of all site sessions","Jun 1&ndash;30"]},
+ quarter:{primary:[
+   {m:"Engagement Rate",sub:"per impression",v:"11.2%",d:4.3,dir:-1},
+   {m:"Content Reach",sub:"impressions on posts",v:"95,106",d:19.2,dir:1},
+   {m:"Reactions",sub:"lightweight engagement",v:"2,074",d:42.5,dir:1},
+   {m:"Stickiness &mdash; Shares",sub:"amplification",v:"488",d:63.8,dir:1},
+   {m:"Stickiness &mdash; Comments",sub:"conversation",v:"51",d:45.7,dir:1},
+   {m:"Video Views",sub:"LinkedIn (Sprout &ndash; unreliable)",v:"0",d:0,dir:0},
+  ],secondary:[
+   {m:"Profile Impressions",sub:"brand interest",v:"103,669",d:19.8,dir:1},
+   {m:"Channel Growth",sub:"net new followers",v:"+1,995",d:41.9,dir:1},
+   {m:"Total Followers",sub:"audience size (end of Q2)",v:"24,400",d:8.7,dir:1},
+  ],traffic:[
+   {m:"Sessions",sub:"visits from organic",v:"6,589",d:29.7,dir:1},
+   {m:"Total Users",sub:"unique visitors",v:"4,697",d:13.1,dir:1},
+   {m:"New Users",sub:"first-time visitors",v:"4,329",d:16.8,dir:1},
+   {m:"Engagement Rate",sub:"engaged sessions",v:"62.9%",d:1.9,dir:1},
+   {m:"Session Time",sub:"avg. duration",v:"3:34",d:16.9,dir:1},
+  ],share:["15.5%","of all site sessions","Apr 1 &ndash; Jun 30"]}
+};
+
+/* ---------- BENCHMARKS (mean +/- 1 SD, complete months Jan-May 2026) ---------- */
+const BENCH={
+ "Engagement Rate":{mean:11.2,lo:8.8,hi:13.7,txt:"Benchmark <b>11.2%</b> &middot; typical 8.8&ndash;13.7%"},
+ "Content Reach":{mean:28827,lo:21617,hi:36038,txt:"Benchmark <b>28.8k</b> &middot; typical 21.6k&ndash;36.0k"},
+ "Shares":{mean:123,lo:80,hi:165,txt:"Benchmark <b>123</b> &middot; typical 80&ndash;165"},
+ "Comments":{mean:14,lo:8,hi:21,txt:"Benchmark <b>14</b> &middot; typical 8&ndash;21"},
+ "Reactions":{mean:545,lo:357,hi:734,txt:"Benchmark <b>545</b> &middot; typical 357&ndash;734"},
+ "Profile Impressions":{mean:30672,lo:23997,hi:37347,txt:"Benchmark <b>30.7k</b> &middot; typical 24.0k&ndash;37.3k"},
+ "Net Follower Growth":{mean:527,lo:384,hi:670,txt:"Benchmark <b>527</b> &middot; typical 384&ndash;670"},
+};
+const BENCH_NOTE={
+ "Total Followers":"Cumulative series &mdash; benchmark is monthly net add &asymp; <b>553</b> (see Net Follower Growth).",
+ "Video Views":"No benchmark &mdash; LinkedIn video views unreliable in Sprout (reads 0).",
+};
+
+function lineSVG(vals,labels,disp,bench){
   const W=300,H=110,padL=18,padR=18,padT=22,padB=18;
-  const mn=Math.min(...vals),mx=Math.max(...vals);const span=(mx-mn)||1;
+  let mn=Math.min(...vals),mx=Math.max(...vals);
+  // expand the y-range so the benchmark band is always visible
+  if(bench){mn=Math.min(mn,bench.lo);mx=Math.max(mx,bench.hi);}
+  const span=(mx-mn)||1;
   const n=vals.length;const ux=(W-padL-padR)/(n-1);
   // leave ~25% headroom below the lowest point so the minimum doesn't sit on the axis (and read as zero)
   const usable=(H-padT-padB)*0.75;
   const x=i=>padL+i*ux;const y=v=>padT+(1-(v-mn)/span)*usable;
   let pts=vals.map((v,i)=>`${x(i).toFixed(1)},${y(v).toFixed(1)}`);
-  // solid path for complete months (0..n-2), dashed to last (MTD)
-  const solid=pts.slice(0,n-1).join(" ");
+  // all months complete -> single solid path
+  const solid=pts.join(" ");
   const base=H-padB+0.5;
-  let dots=vals.map((v,i)=>{const last=i===n-1;return `<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="${last?3.2:2.6}" fill="${last?'#fff':'#C9006B'}" stroke="#C9006B" stroke-width="${last?1.6:0}"/>`;}).join("");
+  // benchmark band (mean +/- 1 SD, Jan-May) + mean line, drawn behind the data
+  let benchSVG="";
+  if(bench){const yh=y(bench.hi),yl=y(bench.lo),ym=y(bench.mean),bx=padL-6,bw=(W-padR+6)-(padL-6);
+    benchSVG=`<rect x="${bx}" y="${yh.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(0,yl-yh).toFixed(1)}" fill="#C9006B" opacity="0.10"/>`+
+      `<line x1="${bx}" y1="${ym.toFixed(1)}" x2="${bx+bw}" y2="${ym.toFixed(1)}" stroke="#C9006B" stroke-width="1" stroke-dasharray="2 2" opacity="0.55"/>`;}
+  let dots=vals.map((v,i)=>{const last=i===n-1;return `<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="${last?3.0:2.6}" fill="#C9006B" stroke="#C9006B" stroke-width="0"/>`;}).join("");
   // value labels above each point
   let vlabs=vals.map((v,i)=>{const d=disp?disp[i]:v;return `<text x="${x(i).toFixed(1)}" y="${(y(v)-6).toFixed(1)}" font-size="8" text-anchor="middle" fill="#1d1d28" font-weight="700">${fmtShort(d)}</text>`;}).join("");
   // month (x-axis) labels
   let labs=labels.map((l,i)=>`<text x="${x(i).toFixed(1)}" y="${H-4}" font-size="8.5" text-anchor="middle" fill="#6b6b7b" font-weight="600">${l}</text>`).join("");
-  return `<svg viewBox="0 0 ${W} ${H}"><line x1="${padL-8}" y1="${base}" x2="${W-padR+8}" y2="${base}" stroke="#e7d3df" stroke-width="1"/><polyline points="${solid}" fill="none" stroke="#C9006B" stroke-width="1.8"/><polyline points="${pts[n-2]} ${pts[n-1]}" fill="none" stroke="#C9006B" stroke-width="1.4" stroke-dasharray="3 2"/>${dots}${vlabs}${labs}</svg>`;
+  return `<svg viewBox="0 0 ${W} ${H}">${benchSVG}<line x1="${padL-8}" y1="${base}" x2="${W-padR+8}" y2="${base}" stroke="#e7d3df" stroke-width="1"/><polyline points="${solid}" fill="none" stroke="#C9006B" stroke-width="1.8"/>${dots}${vlabs}${labs}</svg>`;
 }
 function barSVG(vals,labels){
   const W=116,H=110,padT=18,padB=18;const mx=Math.max(...vals,1);
@@ -221,21 +355,56 @@ function fmtShort(v){if(typeof v!=="number")return v;if(Math.abs(v)>=1000)return
 function kcard(k){
   const dirCls=k.dir>0?"up":(k.dir<0?"down":"flat");
   const arrow=k.dir>0?"&#9650;":(k.dir<0?"&#9660;":"&mdash;");
-  const deltaTxt=k.dir===0?"&mdash;":`${arrow} ${k.delta}% <span style="color:#9a7a8a;font-weight:400">vs Apr</span>`;
+  const deltaTxt=k.dir===0?"&mdash;":`${arrow} ${k.delta}% <span style="color:#9a7a8a;font-weight:400">vs May</span>`;
+  const b=BENCH[k.name];
+  const cap=b?`<div class="benchcap"><span class="bswatch"></span><span>${b.txt} <span class="bsub">(mean &plusmn; 1 SD, Jan&ndash;May)</span></span></div>`
+            :(BENCH_NOTE[k.name]?`<div class="benchcap muted">${BENCH_NOTE[k.name]}</div>`:"");
   return `<div class="kcard">
     <div class="khead"><div class="kname">${k.name}<small>${k.sub}</small></div>
       <div class="kval">${k.value}<span class="kd ${dirCls}">${deltaTxt}</span></div></div>
     <div class="charts">
-      <div class="line"><div class="ctitle">Monthly &mdash; 2026</div>${lineSVG(k.monthly,DATA.months,k.monthlyDisp)}</div>
+      <div class="line"><div class="ctitle">Monthly &mdash; 2026</div>${lineSVG(k.monthly,DATA.months,k.monthlyDisp,b)}</div>
       <div class="bar"><div class="ctitle">Quarter</div>${barSVG(k.quarterly,DATA.quarters)}</div>
-    </div></div>`;
+    </div>${cap}</div>`;
 }
 function renderTrend(id,arr){document.getElementById(id).innerHTML=arr.map(kcard).join("");}
 renderTrend("trendPrimary",DATA.primary);
 renderTrend("trendSecondary",DATA.secondary);
 renderTrend("trendTraffic",DATA.traffic);
 
-document.getElementById("asof").innerHTML="As of June 29, 2026 &middot; Snapshot windows: last completed week (Jun 21&ndash;27), MTD (Jun 1&ndash;29), QTD (Apr 1 &ndash; Jun 29)<br><span style='color:#9a7a8a'>Snapshot deltas vs the preceding equal period. Trend headline = latest complete month vs prior month. * Jun = month to date. Traffic last-week &amp; MTD carry the prior pull (see traffic note).</span>";
+document.getElementById("asof").innerHTML="Final numbers as of July 1, 2026 &middot; June and Q2 2026 have closed.<br><span style='color:#9a7a8a'>Snapshot tab reflects the last weekly pull (Jun 29). Trends headline = latest complete month (June) vs prior month. Final tab = completed June &amp; Q2 totals.</span>";
+
+/* ---------- FINAL tables ---------- */
+function fcell(o){if(o.dir===0)return `<td><span class="val">${o.v}</span><br><span class="delta flat">&mdash;</span></td>`;
+ const c=o.dir>0?"up":"down",ar=o.dir>0?"&#9650;":"&#9660;";return `<td><span class="val">${o.v}</span><br><span class="delta ${c}">${ar} ${o.d}%</span></td>`;}
+function renderFinal(id,rows){document.getElementById(id).innerHTML=rows.map(r=>
+ `<tr><td class="metric">${r.m}<small>${r.sub}</small></td>${fcell(r)}</tr>`).join("");}
+function fillFinal(scope,data,cmpLabel){
+ document.querySelectorAll('#'+scope+' tr.fhead').forEach(tr=>{tr.innerHTML=
+  '<th class="metric">Metric</th><th><span class="periodhead">Value</span><span class="periodsub">'+cmpLabel+'</span></th>';});
+}
+fillFinal('final-month',FINAL.month,'&Delta; vs May');
+fillFinal('final-quarter',FINAL.quarter,'&Delta; vs Q1');
+renderFinal('fmPrimary',FINAL.month.primary);renderFinal('fmSecondary',FINAL.month.secondary);renderFinal('fmTraffic',FINAL.month.traffic);
+renderFinal('fqPrimary',FINAL.quarter.primary);renderFinal('fqSecondary',FINAL.quarter.secondary);renderFinal('fqTraffic',FINAL.quarter.traffic);
+function shareCard(s,title){return `<div class="sharecard"><div class="lbl">${title}</div><div class="big">${s[0]}</div><div class="meta">${s[1]}<br>${s[2]}</div></div>`;}
+document.getElementById('fmShare').innerHTML=shareCard(FINAL.month.share,'Organic share &mdash; June');
+document.getElementById('fqShare').innerHTML=shareCard(FINAL.quarter.share,'Organic share &mdash; Q2');
+
+/* ---------- tab switching ---------- */
+document.querySelectorAll('.tabbtn').forEach(b=>b.addEventListener('click',()=>{
+ document.querySelectorAll('.tabbtn').forEach(x=>x.classList.remove('active'));
+ document.querySelectorAll('.tabpane').forEach(x=>x.classList.remove('active'));
+ b.classList.add('active');
+ document.getElementById('tab-'+b.dataset.tab).classList.add('active');
+ window.scrollTo({top:0,behavior:'smooth'});
+}));
+document.querySelectorAll('.subtab').forEach(b=>b.addEventListener('click',()=>{
+ document.querySelectorAll('.subtab').forEach(x=>x.classList.remove('active'));
+ document.querySelectorAll('.finalpane').forEach(x=>x.classList.remove('active'));
+ b.classList.add('active');
+ document.getElementById('final-'+b.dataset.final).classList.add('active');
+}));
 </script>
 </body>
 </html>
