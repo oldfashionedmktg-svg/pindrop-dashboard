@@ -125,7 +125,7 @@ details.gloss[open]>summary{border-bottom:1px solid var(--line)}
 
   <!-- SNAPSHOT -->
   <div id="tab-snapshot" class="tabpane active">
-  <div class="note" style="margin:14px 0 4px"><b>Snapshot</b> reflects the most recent weekly pull (Jun 29). For completed-period totals now that June and Q2 have closed, see the <b>Final numbers</b> tab.</div>
+  <div class="note" style="margin:14px 0 4px"><b>Snapshot carries the last weekly pull (through Jun 29)</b> &mdash; the MTD and QTD columns below still show June/Q2 windows and refresh to <b>July (MTD)</b> and <b>Q3 (QTD)</b> on the next weekly run (Mon Jul 6). For completed June &amp; Q2 totals now, see the <b>Final numbers</b> tab.</div>
   <div class="section-title"><span class="dot"></span>Current Snapshot</div>
   <div class="subsection">Primary KPIs &mdash; LinkedIn (post-level &middot; Post Performance)</div>
   <details class="gloss sub">
@@ -246,8 +246,8 @@ const SHARE=[["Last week","18.5%","Jun 14&ndash;20*"],["Month to date","14.4%","
 function headRow(id){document.getElementById(id).innerHTML=
  '<th class="metric">Metric</th>'+
  '<th><span class="periodhead">Last week</span><span class="periodsub">Jun 21&ndash;27</span></th>'+
- '<th><span class="periodhead">MTD</span><span class="periodsub">Jun 1&ndash;29</span></th>'+
- '<th><span class="periodhead">QTD</span><span class="periodsub">Apr 1 &ndash; Jun 29</span></th>';}
+ '<th><span class="periodhead">MTD</span><span class="periodsub">Jun 1&ndash;29 &middot; last pull</span></th>'+
+ '<th><span class="periodhead">QTD</span><span class="periodsub">Apr 1&ndash;Jun 29 &middot; last pull</span></th>';}
 ["h1","h2","h3"].forEach(headRow);
 function cell(a){const[v,d,dir]=a;if(dir===0)return `<td><span class="val">${v}</span><br><span class="delta flat">&mdash;</span></td>`;
  const c=dir>0?"up":"down",ar=dir>0?"&#9650;":"&#9660;";return `<td><span class="val">${v}</span><br><span class="delta ${c}">${ar} ${d}%</span></td>`;}
