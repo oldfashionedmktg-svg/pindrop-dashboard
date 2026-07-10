@@ -108,11 +108,11 @@ details.gloss[open]>summary{border-bottom:1px solid var(--line)}
       <p class="glossitem"><b>MTD (month to date)</b> &mdash; the 1st of the current month through today.</p>
       <p class="glossitem"><b>QTD (quarter to date)</b> &mdash; the 1st of the current quarter through today.</p>
       <div class="glossgrp">Reading the deltas</div>
-      <p class="glossitem"><b>Snapshot &Delta;</b> &mdash; change vs a <b>rolling 6-month historical benchmark</b> (the trailing 6 complete months, currently Jan&ndash;Jun 2026), not the prior period. Rate metrics (engagement rate, session time, organic share) compare directly to the 6-month average; volume metrics (impressions, shares, sessions, etc.) compare to the benchmark's average daily pace scaled to the window length. This answers &ldquo;am I beating my historical run-rate&rdquo; rather than &ldquo;did I beat last week.&rdquo;</p>
+      <p class="glossitem"><b>Snapshot &Delta;</b> &mdash; change vs a <b>fixed Jan&ndash;Apr 2026 historical benchmark</b>, not the prior period and not a rolling window &mdash; this baseline stays Jan&ndash;Apr going forward regardless of when the dashboard is pulled. Rate metrics (engagement rate, session time, organic share) compare directly to the Jan&ndash;Apr average; volume metrics (impressions, shares, sessions, etc.) compare to the benchmark's average daily pace scaled to the window length. This answers &ldquo;am I beating my historical run-rate&rdquo; rather than &ldquo;did I beat last week.&rdquo;</p>
       <p class="glossitem"><b>Trend headline</b> &mdash; latest complete month (June 2026) vs the prior month.</p>
       <p class="glossitem"><b>Final numbers tab</b> &mdash; totals for the period that just closed: completed June (vs May) and completed Q2 (vs Q1).</p>
       <div class="glossgrp">Benchmarks</div>
-      <p class="glossitem"><b>Benchmark band</b> &mdash; on each primary &amp; secondary line chart, the shaded magenta band is the <b>typical monthly range</b> for 2026, derived from the trailing 6 complete months (currently Jan&ndash;Jun 2026) as the mean &plusmn; 1 standard deviation; the dashed line is the mean. This is the same benchmark used for the Snapshot &Delta;s above, just shown at monthly resolution. A point inside the band is a normal month; above the band is a strong month, below is a soft one. <b>Total Followers</b> (cumulative) and <b>Video Views</b> (unreliable in Sprout) have no band.</p>
+      <p class="glossitem"><b>Benchmark band</b> &mdash; on each primary &amp; secondary line chart, the shaded magenta band is the <b>typical monthly range</b> for 2026, derived from the fixed Jan&ndash;Apr 2026 baseline as the mean &plusmn; 1 standard deviation; the dashed line is the mean. This is the same benchmark used for the Snapshot &Delta;s above, just shown at monthly resolution. A point inside the band is a normal month; above the band is a strong month, below is a soft one. <b>Total Followers</b> (cumulative) and <b>Video Views</b> (unreliable in Sprout) have no band.</p>
     </div>
   </details>
 
@@ -126,7 +126,7 @@ details.gloss[open]>summary{border-bottom:1px solid var(--line)}
   <!-- SNAPSHOT -->
   <div id="tab-snapshot" class="tabpane active">
   <div class="section-title"><span class="dot"></span>Current Snapshot</div>
-  <div class="note" style="margin-top:0"><b>How to read &Delta;:</b> every change below is measured against a <b>rolling 6-month historical benchmark</b> (trailing 6 complete months, currently Jan&ndash;Jun 2026) &mdash; not the prior week/month/quarter. It's a run-rate check: is this period pacing ahead of or behind our typical historical performance, not just ahead of a single prior period.</div>
+  <div class="note" style="margin-top:0"><b>How to read &Delta;:</b> every change below is measured against a <b>fixed Jan&ndash;Apr 2026 historical benchmark</b> &mdash; not the prior week/month/quarter, and not a rolling window. It's a run-rate check against that fixed baseline: is this period pacing ahead of or behind our early-2026 typical performance.</div>
   <div class="subsection">Primary KPIs &mdash; LinkedIn (post-level &middot; Post Performance)</div>
   <details class="gloss sub">
     <summary>Primary KPI definitions<span class="chev">&#9656;</span></summary>
@@ -171,7 +171,7 @@ details.gloss[open]>summary{border-bottom:1px solid var(--line)}
   <!-- TRENDS -->
   <div id="tab-trends" class="tabpane">
   <div class="section-title"><span class="dot" style="background:var(--crimson)"></span>Trends &mdash; Primary KPIs (LinkedIn)</div>
-  <div class="note" id="ytnote" style="margin-top:0;margin-bottom:14px"><b>Reading the trends:</b> each headline value is the latest <b>complete</b> month (June 2026) with its change vs the prior month. Line charts show every month Jan&ndash;Jul 2026 (Jan&ndash;Jun complete; Jul is month-to-date, Jul 1&ndash;10). Bars compare Q2 (Apr&ndash;Jun, final) to Q3 (Jul&ndash;Sep, quarter-to-date). The shaded magenta band on each primary &amp; secondary chart is the <b>rolling 6-month benchmark</b> &mdash; the typical monthly range (mean &plusmn; 1 SD) from the trailing 6 complete months, currently Jan&ndash;Jun; the dashed line is the mean. Same benchmark basis as the Snapshot tab's &Delta;s.</div>
+  <div class="note" id="ytnote" style="margin-top:0;margin-bottom:14px"><b>Reading the trends:</b> each headline value is the latest <b>complete</b> month (June 2026) with its change vs the prior month. Line charts show every month Jan&ndash;Jul 2026 (Jan&ndash;Jun complete; Jul is month-to-date, Jul 1&ndash;10). Bars compare Q2 (Apr&ndash;Jun, final) to Q3 (Jul&ndash;Sep, quarter-to-date). The shaded magenta band on each primary &amp; secondary chart is the <b>fixed Jan&ndash;Apr 2026 benchmark</b> &mdash; the typical monthly range (mean &plusmn; 1 SD) from that baseline; the dashed line is the mean. Same benchmark basis as the Snapshot tab's &Delta;s.</div>
   <div class="kgrid" id="trendPrimary"></div>
 
   <div class="section-title"><span class="dot" style="background:var(--crimson)"></span>Trends &mdash; Secondary KPIs</div>
@@ -215,33 +215,33 @@ details.gloss[open]>summary{border-bottom:1px solid var(--line)}
   </div><!-- /tab-final -->
 
   <div class="foot">
-    <b>Sources:</b> Primary &mdash; Sprout Social Cross-Network &rsaquo; Post Performance (LinkedIn). Secondary &mdash; Sprout Social LinkedIn Pages. Traffic &mdash; Google Looker Studio (GA4), Organic Social + Organic Video channels combined. Snapshot tab pulled Jul 10, 2026 (refreshed Fridays, trailing 7 days); &Delta;s vs a rolling 6-month benchmark (trailing 6 complete months) rather than the prior period. Final numbers tab pulled Jul 1, 2026: completed June and Q2 (refreshed on the 1st of each month and each quarter). LinkedIn video views/saves are unreliable in Sprout (known data issue). Session time = avg. session duration.
+    <b>Sources:</b> Primary &mdash; Sprout Social Cross-Network &rsaquo; Post Performance (LinkedIn). Secondary &mdash; Sprout Social LinkedIn Pages. Traffic &mdash; Google Looker Studio (GA4), Organic Social + Organic Video channels combined. Snapshot tab pulled Jul 10, 2026 (refreshed Fridays, trailing 7 days); &Delta;s vs a fixed Jan&ndash;Apr 2026 benchmark rather than the prior period. Final numbers tab pulled Jul 1, 2026: completed June and Q2 (refreshed on the 1st of each month and each quarter). LinkedIn video views/saves are unreliable in Sprout (known data issue). Session time = avg. session duration.
   </div>
 </div>
 
 <script>
-/* ---------- SNAPSHOT (trailing 7 days / MTD / QTD, each vs rolling 6-month benchmark) ---------- */
+/* ---------- SNAPSHOT (trailing 7 days / MTD / QTD, each vs FIXED Jan-Apr 2026 benchmark) ---------- */
 const SNAP_PRIMARY=[
- {m:"Engagement Rate",sub:"per impression &middot; bench 11.5%",w:["12.2%",6.2,1],mo:["9.9%",13.8,-1],q:["9.9%",13.8,-1]},
- {m:"Content Reach",sub:"impressions on posts &middot; bench 6,756/7d",w:["1,185",82.5,-1],mo:["1,639",83.0,-1],q:["1,639",83.0,-1]},
- {m:"Stickiness &mdash; Shares",sub:"amplification &middot; bench 30/7d",w:["35",15.1,1],mo:["37",14.8,-1],q:["37",14.8,-1]},
- {m:"Stickiness &mdash; Comments",sub:"conversation &middot; bench 3/7d",w:["1",69.9,-1],mo:["1",79.0,-1],q:["1",79.0,-1]},
+ {m:"Engagement Rate",sub:"per impression &middot; bench 10.7%",w:["12.2%",14.0,1],mo:["9.9%",7.5,-1],q:["9.9%",7.5,-1]},
+ {m:"Content Reach",sub:"impressions on posts &middot; bench 6,814/7d",w:["1,185",82.6,-1],mo:["1,639",83.2,-1],q:["1,639",83.2,-1]},
+ {m:"Stickiness &mdash; Shares",sub:"amplification &middot; bench 28/7d",w:["35",26.8,1],mo:["37",6.1,-1],q:["37",6.1,-1]},
+ {m:"Stickiness &mdash; Comments",sub:"conversation &middot; bench 3/7d",w:["1",67.0,-1],mo:["1",76.9,-1],q:["1",76.9,-1]},
  {m:"Stickiness &mdash; Saves",sub:"worth returning to",w:["0",0,0],mo:["0",0,0],q:["0",0,0]},
  {m:"Video Views",sub:"LinkedIn (Sprout &ndash; unreliable)",w:["0",0,0],mo:["0",0,0],q:["0",0,0]},
 ];
 const SNAP_SECONDARY=[
- {m:"Profile Impressions",sub:"brand interest &middot; bench 7,355/7d",w:["3,134",57.4,-1],mo:["5,101",51.5,-1],q:["5,101",51.5,-1]},
- {m:"Channel Growth",sub:"net new followers &middot; bench 132/7d",w:["+92",30.1,-1],mo:["+144",23.4,-1],q:["+144",23.4,-1]},
+ {m:"Profile Impressions",sub:"brand interest &middot; bench 7,066/7d",w:["3,134",55.6,-1],mo:["5,101",49.5,-1],q:["5,101",49.5,-1]},
+ {m:"Channel Growth",sub:"net new followers &middot; bench 120/7d",w:["+92",23.3,-1],mo:["+144",16.0,-1],q:["+144",16.0,-1]},
  {m:"Total Followers",sub:"audience size (cumulative &mdash; no benchmark)",w:["24,564",0,0],mo:["24,564",0,0],q:["24,564",0,0]},
 ];
 const SNAP_TRAFFIC=[
- {m:"Sessions",sub:"visits from organic &middot; bench 451/7d",w:["544",20.7,1],mo:["729",13.3,1],q:["729",13.3,1]},
- {m:"Total Users",sub:"unique visitors &middot; bench 352/7d",w:["456",29.6,1],mo:["600",19.4,1],q:["600",19.4,1]},
- {m:"New Users",sub:"first-time visitors &middot; bench 311/7d",w:["377",21.3,1],mo:["493",11.1,1],q:["493",11.1,1]},
- {m:"Engagement Rate",sub:"engaged sessions &middot; bench 62.0%",w:["55.3%",10.9,-1],mo:["56.2%",9.4,-1],q:["56.2%",9.4,-1]},
- {m:"Session Time",sub:"avg. duration &middot; bench 3:18",w:["2:29",24.7,-1],mo:["2:26",26.3,-1],q:["2:26",26.3,-1]},
+ {m:"Sessions",sub:"visits from organic &middot; bench 424/7d",w:["544",28.2,1],mo:["729",20.2,1],q:["729",20.2,1]},
+ {m:"Total Users",sub:"unique visitors &middot; bench 340/7d",w:["456",34.1,1],mo:["600",23.5,1],q:["600",23.5,1]},
+ {m:"New Users",sub:"first-time visitors &middot; bench 302/7d",w:["377",25.0,1],mo:["493",14.4,1],q:["493",14.4,1]},
+ {m:"Engagement Rate",sub:"engaged sessions &middot; bench 62.3%",w:["55.3%",11.2,-1],mo:["56.2%",9.8,-1],q:["56.2%",9.8,-1]},
+ {m:"Session Time",sub:"avg. duration &middot; bench 3:11",w:["2:29",21.8,-1],mo:["2:26",23.4,-1],q:["2:26",23.4,-1]},
 ];
-const SHARE=[["Trailing 7 Days","21.3%","Jul 3&ndash;9 &middot; vs 6-mo avg 14.2%: +50%"],["Month to date","20.0%","Jul 1&ndash;10 &middot; vs 6-mo avg 14.2%: +41%"],["Quarter to date","20.0%","Jul 1&ndash;10 &middot; vs 6-mo avg 14.2%: +41%"]];
+const SHARE=[["Trailing 7 Days","21.3%","Jul 3&ndash;9 &middot; vs Jan-Apr avg 13.6%: +56%"],["Month to date","20.0%","Jul 1&ndash;10 &middot; vs Jan-Apr avg 13.6%: +47%"],["Quarter to date","20.0%","Jul 1&ndash;10 &middot; vs Jan-Apr avg 13.6%: +47%"]];
 
 function headRow(id){document.getElementById(id).innerHTML=
  '<th class="metric">Metric</th>'+
@@ -299,18 +299,18 @@ const FINAL={
   ],share:["15.5%","of all site sessions","Apr 1 &ndash; Jun 30"]}
 };
 
-/* ---------- BENCHMARKS (mean +/- 1 SD, trailing 6 complete months, currently Jan-Jun 2026) ---------- */
+/* ---------- BENCHMARKS (mean +/- 1 SD, FIXED baseline Jan-Apr 2026 — not rolling) ---------- */
 const BENCH={
- "Engagement Rate":{mean:11.5,lo:9.2,hi:13.8,txt:"Benchmark <b>11.5%</b> &middot; typical 9.2&ndash;13.8%"},
- "Content Reach":{mean:29117,lo:22629,hi:35605,txt:"Benchmark <b>29.1k</b> &middot; typical 22.6k&ndash;35.6k"},
- "Shares":{mean:131,lo:88,hi:174,txt:"Benchmark <b>131</b> &middot; typical 88&ndash;174"},
- "Comments":{mean:14,lo:9,hi:20,txt:"Benchmark <b>14</b> &middot; typical 9&ndash;20"},
- "Reactions":{mean:588,lo:389,hi:787,txt:"Benchmark <b>588</b> &middot; typical 389&ndash;787"},
- "Profile Impressions":{mean:31695,lo:25220,hi:38170,txt:"Benchmark <b>31.7k</b> &middot; typical 25.2k&ndash;38.2k"},
- "Net Follower Growth":{mean:567,lo:406,hi:728,txt:"Benchmark <b>567</b> &middot; typical 406&ndash;728"},
+ "Engagement Rate":{mean:10.7,lo:8.2,hi:13.2,txt:"Benchmark <b>10.7%</b> &middot; typical 8.2&ndash;13.2%"},
+ "Content Reach":{mean:29204,lo:20935,hi:37473,txt:"Benchmark <b>29.2k</b> &middot; typical 20.9k&ndash;37.5k"},
+ "Shares":{mean:118,lo:70,hi:166,txt:"Benchmark <b>118</b> &middot; typical 70&ndash;166"},
+ "Comments":{mean:13,lo:6,hi:20,txt:"Benchmark <b>13</b> &middot; typical 6&ndash;20"},
+ "Reactions":{mean:541,lo:324,hi:758,txt:"Benchmark <b>541</b> &middot; typical 324&ndash;758"},
+ "Profile Impressions":{mean:30281,lo:22640,hi:37922,txt:"Benchmark <b>30.3k</b> &middot; typical 22.6k&ndash;37.9k"},
+ "Net Follower Growth":{mean:514,lo:353,hi:676,txt:"Benchmark <b>514</b> &middot; typical 353&ndash;676"},
 };
 const BENCH_NOTE={
- "Total Followers":"Cumulative series &mdash; benchmark is monthly net add &asymp; <b>567</b> (see Net Follower Growth).",
+ "Total Followers":"Cumulative series &mdash; benchmark is monthly net add &asymp; <b>514</b> (see Net Follower Growth).",
  "Video Views":"No benchmark &mdash; LinkedIn video views unreliable in Sprout (reads 0).",
 };
 
@@ -357,7 +357,7 @@ function kcard(k){
   const arrow=k.dir>0?"&#9650;":(k.dir<0?"&#9660;":"&mdash;");
   const deltaTxt=k.dir===0?"&mdash;":`${arrow} ${k.delta}% <span style="color:#9a7a8a;font-weight:400">vs May</span>`;
   const b=BENCH[k.name];
-  const cap=b?`<div class="benchcap"><span class="bswatch"></span><span>${b.txt} <span class="bsub">(mean &plusmn; 1 SD, trailing 6 mo)</span></span></div>`
+  const cap=b?`<div class="benchcap"><span class="bswatch"></span><span>${b.txt} <span class="bsub">(mean &plusmn; 1 SD, Jan&ndash;Apr fixed)</span></span></div>`
             :(BENCH_NOTE[k.name]?`<div class="benchcap muted">${BENCH_NOTE[k.name]}</div>`:"");
   return `<div class="kcard">
     <div class="khead"><div class="kname">${k.name}<small>${k.sub}</small></div>
@@ -372,7 +372,7 @@ renderTrend("trendPrimary",DATA.primary);
 renderTrend("trendSecondary",DATA.secondary);
 renderTrend("trendTraffic",DATA.traffic);
 
-document.getElementById("asof").innerHTML="Snapshot as of July 10, 2026 &middot; trailing 7 days Jul 3&ndash;9, MTD &amp; QTD Jul 1&ndash;10 &mdash; each measured against a rolling 6-month benchmark (Jan&ndash;Jun 2026), not the prior period.<br><span style='color:#9a7a8a'>Trends headline = latest complete month (June) vs prior month; July shown as month-to-date. Final tab = completed June &amp; Q2 totals (pulled Jul 1).</span>";
+document.getElementById("asof").innerHTML="Snapshot as of July 10, 2026 &middot; trailing 7 days Jul 3&ndash;9, MTD &amp; QTD Jul 1&ndash;10 &mdash; each measured against a fixed Jan&ndash;Apr 2026 benchmark, not the prior period.<br><span style='color:#9a7a8a'>Trends headline = latest complete month (June) vs prior month; July shown as month-to-date. Final tab = completed June &amp; Q2 totals (pulled Jul 1).</span>";
 
 /* ---------- FINAL tables ---------- */
 function fcell(o){if(o.dir===0)return `<td><span class="val">${o.v}</span><br><span class="delta flat">&mdash;</span></td>`;
